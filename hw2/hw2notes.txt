@@ -1,0 +1,28 @@
+task2:
+/********************
+first remember to export
+*********************/
+ssh -X xinw3@ghc30.ghc.andrew.cmu.edu
+
+export CUDA_HOME=/usr/local/depot/cuda-8.0export PATH=$PATH:${CUDA_HOME}/binexport LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${CUDA_HOME}/lib64:${CUDA_HOME}/lib:$HOME/cppunit/lib
+
+
+
+/***********
+open visual profile
+************/
+
+nvvp
+
+
+only 8, 10, 32 dimension can be executed.
+
+transpose example:
+1. https://devblogs.nvidia.com/parallelforall/cudacasts-episode-19-cuda-6-guided-performance-analysis-visual-profiler/
+
+2. http://cs.nyu.edu/courses/spring12/CSCI-GA.3033-012/lecture5.pdf
+
+3. http://developer.download.nvidia.com/compute/cuda/8.0/secure/prod/docs/sidebar/CUDA_Toolkit_Release_Notes_Errata.pdf?autho=1487949656_c6cbe16847940a9e0daa1f064e87108f&file=CUDA_Toolkit_Release_Notes_Errata.pdf
+
+4. https://people.maths.ox.ac.uk/gilesm/cuda/lecs/lecs.pdf
+5. http://www.cs.siue.edu/~marmcke/docs/cybergis/cuda.html

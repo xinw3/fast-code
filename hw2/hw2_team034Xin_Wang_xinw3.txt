@@ -1,0 +1,81 @@
+###################################################################
+# Carnegie Mellon University - Electrical and Computer Engineering
+# 18-645: How To Write Fast Code (Spring 2017)
+#
+#     HOMEWORK 2 Answer Sheet
+#
+# Due:  March 1, 2017
+#
+# Note: For ease of grading, please follow the format exactly
+#
+#       There are many students in this class, the course staff
+#       would like to automate the process of grading the 
+#       homework so we can spend more time helping you with the 
+#       understanding of the knowledge. 
+#
+#       Thank you for your cooperation. 
+#
+###################################################################
+
+Student Name : Xin Wang
+
+Team Name : team034
+
+Date of Submission : 2/28/2017
+
+# =================================================================
+# TASK 0
+# - Please name this file: 18645_HW2_{FirstName}_{LastName}.txt
+# - e.g. "18645_HW2_Anderson_Jane.txt"
+
+# =================================================================
+# TASK 1
+# - Setting up the CUDA environment
+# - Downloading and Installing SDK
+# - Build executables   
+# - Run Tests
+
+Question 1:
+a) Host to Device Bandwidth: 11694.4 MB/s
+b) Device to Host Bandwidth: 12872.7 MB/s
+c) Device to Device Bandwidth: 230991.2 MB/s
+
+# =================================================================
+# TASK 2
+# - Get information about the GPU and Run the CUDA Visual Profiler
+# - Running the CUDA Visual Profiler
+
+Is this complete? (Yes/No): Yes
+
+# - Questions on CUDA and GPUs
+
+Question 1 :
+a) Number of threads per block: 1024
+b) Number of threads in a warp: 32
+c) Maximum number of threads per Streaming Multiprocessor: 2048
+d) Maximum number of warps per block: 32
+e) Maximum number of warps per Streaming Multiprocessor: 64
+
+Question 2 :
+a) The size of the register file per Streaming Multiprocessor: 256KB
+b)  Is the shared memory divided into 16 memory banks? (True/False): False
+c) The size of the global memory on the device: 8113 MB
+d) The total amount of shared memory per block: 48KB
+
+Question 3 :
+a) The maximum number of floating point operations per thread per cycle: 128
+b) Yes/No: Yes
+c) The peak performance of a single GTX1080 GPU: 8228 GFLOPS
+
+Question 4 :
+a) The total amount of L2 cache: 2097152 Bytes
+b) True/False: False
+c) True/False: False
+
+
+# =================================================================
+# TASK 3
+# - Getting Started on CUDA Matrix Multiply
+
+Question 1 : 
+a) If successful, report the performance you get for this test case, otherwise explain why it fails: No, it cannot execute the 33 * 33 dimension matrix. In the second part of the program, when it invokes the kernel using "dimBlock(a. b)", it means that there can be a * b threads per block. However, the maximum number of threads in each block is 1024 < 33 * 33, So it failed.

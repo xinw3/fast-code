@@ -1,0 +1,28 @@
+git init
+git add matrix_mul.cpp
+
+git remote add origin .
+git add .
+git commit -m "add threads"
+
+git push origin master
+
+
+scp xinw3@ghc52.ghc.andrew.cmu.edu:/afs/andrew.cmu.edu/usr15/xinw3/645/REPOSITORY/fastcode/kmeans/omp_kmeans.c ~/Desktop/18645_mini1/
+
+scp ~/Desktop/18645_mini1/omp_kmeans_simdPragma4.c xinw3@ghc52.ghc.andrew.cmu.edu:/afs/andrew.cmu.edu/usr15/xinw3/645/REPOSITORY/fastcode/kmeans/omp_kmeans.c
+
+_mm_set_ss
+
+./omp_main -i ~/645/data/kmeans04.dat -n 32 -o
+
+./matrix_mul -i ../matrix_mul_02.dat 
+
+
+scp xinw3@ghc52.ghc.andrew.cmu.edu:/afs/andrew.cmu.edu/usr15/xinw3/645/REPOSITORY/fastcode/matrix_mul/omp/matrix_mul.cpp ~/Desktop/18645_mini1/matrix_mul_xinran.cpp
+
+scp ~/Desktop/18645_mini1/matrix_mul_xinran.cpp xinw3@ghc52.ghc.andrew.cmu.edu:/afs/andrew.cmu.edu/usr15/xinw3/645/REPOSITORY/fastcode/matrix_mul/omp/matrix_mul.cpp
+
+
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/cppunit/lib
+

@@ -1,0 +1,30 @@
+ssh -X xinw3@ghc40.ghc.andrew.cmu.edu
+
+scp -r xinw3@ghc40.ghc.andrew.cmu.edu:~/645/fastcode/matrix_mul/cuda ~/Desktop/mini_project2/
+
+scp xinw3@ghc40.ghc.andrew.cmu.edu:~/645/fastcode/kmeans/cuda_kmeans.cu ~/Desktop/mini_project2/
+
+/*************private**********************/
+
+scp ~/Desktop/mini_project2/18645_spring_15/kmeans/cuda_kmeans.cu xinw3@ghc40.ghc.andrew.cmu.edu:~/645/private/kmeans/cuda_kmeans.cu
+
+scp ~/Desktop/mini_project2/18645_spring_15/kmeans/Makefile xinw3@ghc40.ghc.andrew.cmu.edu:~/645/private/kmeans/Makefile
+
+
+/******************shared*****************/
+scp ~/Desktop/mini_project2/18645_spring_15/kmeans/cuda_kmeans.cu xinw3@ghc40.ghc.andrew.cmu.edu:~/645/fastcode/kmeans/cuda_kmeans.cu
+
+scp ~/Desktop/mini_project2/18645_spring_15/kmeans/Makefile xinw3@ghc40.ghc.andrew.cmu.edu:~/645/fastcode/kmeans/Makefile
+
+export LD_LIBRARY_PATH=/usr/local/cuda/lib
+export PATH=$PATH:/usr/local/cuda/bin
+
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/cppunit/lib
+
+./cuda_main -i ~/645/data/kmeans04.dat -n 32 -o
+
+./matrix_mul -i ../matrix_mul_02.dat
+
+
+reference for kmeans
+https://github.com/serban/kmeans
