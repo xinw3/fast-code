@@ -24,9 +24,10 @@ public class HashtagReducer extends Reducer<Text, Text, Text, Text> {
 		 *
 		 * word1:count1;word2:count2;...;wordN:countN;
 		 */
+		 StringBuilder sb = new StringBuilder();
 		 for (String k : tagMap.keySet()) {
-			 context.write(key, new Text(k + ":" + tagMap.get(k)));
+			 sb.append(k + ":" + tagMap.get(k) + ";");
 		 }
-
+		 context.write(key, new Text(sb.toString()));
 	}
 }

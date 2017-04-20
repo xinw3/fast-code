@@ -11,7 +11,7 @@ import org.apache.hadoop.mapreduce.Mapper;
 
 public class SimilarityMapper extends Mapper<LongWritable, Text, IntWritable, Text> {
 
-	Map<String, Integer> jobFeatures = null;
+	Map<String, Integer> hashtagFeatures = null;
 
 	/**
 	 * We compute the inner product of feature vector of every hashtag with that
@@ -26,7 +26,7 @@ public class SimilarityMapper extends Mapper<LongWritable, Text, IntWritable, Te
 		String hashtag = hashtag_featureVector[0];
 		Map<String, Integer> features = parseFeatureVector(hashtag_featureVector[1]);
 
-		Integer similarity = computeInnerProduct(jobFeatures, features);
+		Integer similarity = computeInnerProduct(hashtagFeatures, features);
 		context.write(new IntWritable(similarity), new Text(hashtag));
 	}
 
@@ -38,9 +38,8 @@ public class SimilarityMapper extends Mapper<LongWritable, Text, IntWritable, Te
 	 */
 	@Override
 	protected void setup(Context context) {
-		String jobFeatureVector = context.getConfiguration().get(
-				"jobFeatureVector");
-		jobFeatures = parseFeatureVector(jobFeatureVector);
+		String featureVector = context.getConfiguration().get("featureVector");
+		hashtagFeatures = parseFeatureVector(featureVector);
 	}
 
 	/**

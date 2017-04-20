@@ -20,15 +20,14 @@ public class Driver {
 		// output: #a A:2;B:1...
 		getHashtagFeatureVector(input, tmpdir + "/feature_vector");
 		// load feature vectors
-		// String featureVector = FileUtil.load(dir + "/part-r-00000");
+		// String featureVector = FileUtil.load("/feature_vector/part-r-00000");
 		// // TODO: get inverted index
 		// getInvertedIndex(featureVector, tmpdir + "/inverted_index");
 
 
 		// String hashtagFeatureVector = loadHashtagFeatureVector(tmpdir + "/feature_vector");
 		//
-		// getHashtagSimilarities(hashtagFeatureVector, tmpdir + "/feature_vector",
-		// 		output);
+		// getHashtagSimilarities(featureVector, tmpdir + "/feature_vector", output);
 	}
 
 	/**
@@ -85,12 +84,12 @@ public class Driver {
 	 * @throws ClassNotFoundException
 	 * @throws InterruptedException
 	 */
-	private static void getHashtagSimilarities(String jobFeatureVector,
+	private static void getHashtagSimilarities(String featureVector,
 			String input, String output) throws IOException,
 			ClassNotFoundException, InterruptedException {
 		// Share the feature vector of #job to all mappers.
 		Configuration conf = new Configuration();
-		conf.set("jobFeatureVector", jobFeatureVector);
+		conf.set("featureVector", featureVector);
 
 		Optimizedjob job = new Optimizedjob(conf, input, output,
 				"Get similarities between #job and all other hashtags");
