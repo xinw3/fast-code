@@ -17,22 +17,16 @@ public class Driver {
 		String output = parser.get("output");
 		String tmpdir = parser.get("tmpdir");
 
-		getJobFeatureVector(input, tmpdir + "/job_feature_vector");
-
-		String jobFeatureVector = loadJobFeatureVector(tmpdir
-				+ "/job_feature_vector");
-
-		System.out.println("Job feature vector: " + jobFeatureVector);
-
 		getHashtagFeatureVector(input, tmpdir + "/feature_vector");
+		String hashtagFeatureVector = loadHashtagFeatureVector(tmpdir + "/feature_vector");
 
-		getHashtagSimilarities(jobFeatureVector, tmpdir + "/feature_vector",
+		getHashtagSimilarities(hashtagFeatureVector, tmpdir + "/feature_vector",
 				output);
 	}
 
 	/**
 	 * Computes the word cooccurrence counts for hashtag #job
-	 * 
+	 *
 	 * @param input
 	 *            The directory of input files. It can be local directory, such
 	 *            as "data/", "/home/ubuntu/data/", or Amazon S3 directory, such
@@ -57,7 +51,7 @@ public class Driver {
 
 	/**
 	 * Loads the computed word cooccurrence count for hashtag #job from disk.
-	 * 
+	 *
 	 * @param dir
 	 * @return
 	 * @throws IOException
@@ -75,7 +69,7 @@ public class Driver {
 	/**
 	 * Same as getJobFeatureVector, but this one actually computes feature
 	 * vector for all hashtags.
-	 * 
+	 *
 	 * @param input
 	 * @param output
 	 * @throws Exception
@@ -89,6 +83,14 @@ public class Driver {
 		job.run();
 	}
 
+	private static String loadHashtagFeatureVector(String dir) throws IOException {
+		String temp_featureVector = FileUtil.load(dir + "/part-r-00000");
+
+		// The feature vector looks like "#job word1:count1;word2:count2;..."
+		String featureVector = temp_featureVector.split("\\s+", 2)[1];
+		return featureVector;
+	}
+
 	/**
 	 * When we have feature vector for both #job and all other hashtags, we can
 	 * use them to compute inner products. The problem is how to share the
@@ -96,7 +98,7 @@ public class Driver {
 	 * "Configuration" as the sharing mechanism, since the configuration object
 	 * is dispatched to all mappers at the beginning and used to setup the
 	 * mappers.
-	 * 
+	 *
 	 * @param jobFeatureVector
 	 * @param input
 	 * @param output
@@ -110,7 +112,7 @@ public class Driver {
 		// Share the feature vector of #job to all mappers.
 		Configuration conf = new Configuration();
 		conf.set("jobFeatureVector", jobFeatureVector);
-		
+
 		Optimizedjob job = new Optimizedjob(conf, input, output,
 				"Get similarities between #job and all other hashtags");
 		job.setClasses(SimilarityMapper.class, null, null);

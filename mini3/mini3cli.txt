@@ -1,0 +1,3 @@
+ant
+
+hadoop jar 18645_project3_team034.jar -program hashtagsim -input data/tweets1m/tweets1m.txt -output data/hashtag1m -tmdir tmp
