@@ -18,10 +18,10 @@ public class Driver {
 		String tmpdir = parser.get("tmpdir");
 
 		getHashtagFeatureVector(input, tmpdir + "/feature_vector");
-		String hashtagFeatureVector = loadHashtagFeatureVector(tmpdir + "/feature_vector");
-
-		getHashtagSimilarities(hashtagFeatureVector, tmpdir + "/feature_vector",
-				output);
+		// String hashtagFeatureVector = loadHashtagFeatureVector(tmpdir + "/feature_vector");
+		//
+		// getHashtagSimilarities(hashtagFeatureVector, tmpdir + "/feature_vector",
+		// 		output);
 	}
 
 	/**

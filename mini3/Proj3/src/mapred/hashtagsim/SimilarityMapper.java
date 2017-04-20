@@ -27,25 +27,25 @@ public class SimilarityMapper extends Mapper<LongWritable, Text, IntWritable, Te
 		Map<String, Integer> features = parseFeatureVector(hashtag_featureVector[1]);
 
 		Integer similarity = computeInnerProduct(jobFeatures, features);
-		context.write(new IntWritable(similarity), new Text("#job\t" + hashtag));
+		context.write(new IntWritable(similarity), new Text(hashtag));
 	}
 
 	/**
 	 * This function is ran before the mapper actually starts processing the
 	 * records, so we can use it to setup the job feature vector.
-	 * 
+	 *
 	 * Loads the feature vector for hashtag #job into mapper's memory
 	 */
 	@Override
 	protected void setup(Context context) {
 		String jobFeatureVector = context.getConfiguration().get(
 				"jobFeatureVector");
-		jobFeatures = parseFeatureVector(jobFeatureVector);		
+		jobFeatures = parseFeatureVector(jobFeatureVector);
 	}
 
 	/**
 	 * De-serialize the feature vector into a map
-	 * 
+	 *
 	 * @param featureVector
 	 *            The format is "word1:count1;word2:count2;...;wordN:countN;"
 	 * @return A HashMap, with key being each word and value being the count.
@@ -64,29 +64,15 @@ public class SimilarityMapper extends Mapper<LongWritable, Text, IntWritable, Te
 	 * Computes the dot product of two feature vectors
 	 * @param featureVector1
 	 * @param featureVector2
-	 * @return 
+	 * @return
 	 */
 	private Integer computeInnerProduct(Map<String, Integer> featureVector1,
 			Map<String, Integer> featureVector2) {
 		Integer sum = 0;
-		for (String word : featureVector1.keySet()) 
+		for (String word : featureVector1.keySet())
 			if (featureVector2.containsKey(word))
 				sum += featureVector1.get(word) * featureVector2.get(word);
-		
+
 		return sum;
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
