@@ -31,3 +31,5 @@ aws emr create-cluster --name "Test cluster ngramcount" --ami-version 2.4.11 --s
 export HADOOP_OPTS="-Xmx4096m"
 
 hadoop fs -copyFromLocal data/ .
+
+wc -l 

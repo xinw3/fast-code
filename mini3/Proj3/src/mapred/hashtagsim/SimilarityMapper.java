@@ -36,7 +36,7 @@ public class SimilarityMapper extends Mapper<LongWritable, Text, Text, IntWritab
 	private Map<String, Integer> parseFeatureVector(String tagVector) {
 		Map<String, Integer> tagMap = new HashMap<String, Integer>();
 		String[] tags = tagVector.split(";");
-		for (int i = 0; i < tags.length; i++) {
+		for (int i = 0; i < tags.length - 1; i++) {
 				String[] tag1 = tags[i].split(":");
 				for (int j = i + 1; j < tags.length; j++) {
 						StringBuilder sb = new StringBuilder();
