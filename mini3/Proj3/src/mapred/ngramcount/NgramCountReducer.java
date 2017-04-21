@@ -13,8 +13,9 @@ public class NgramCountReducer extends Reducer<Text, NullWritable, Text, IntWrit
 			Context context)
 			throws IOException, InterruptedException {
 		int count = 0;
-		for (NullWritable n : value)
-			count++;
+		for (NullWritable val : value) {
+			count = count + 1;
+		}
 		
 		context.write(key, new IntWritable(count));
 	}

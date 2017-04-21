@@ -14,14 +14,16 @@ public class Driver {
 
 		String input = parser.get("input");
 		String output = parser.get("output");
-
-		getJobFeatureVector(input, output);
+		String number = parser.get("n");
+		getJobFeatureVector(input, output, number);
 
 	}
 
-	private static void getJobFeatureVector(String input, String output)
+	private static void getJobFeatureVector(String input, String output, String number)
 			throws IOException, ClassNotFoundException, InterruptedException {
-		Optimizedjob job = new Optimizedjob(new Configuration(), input, output,
+		Configuration conf = new Configuration();
+		conf.set("n", number);
+		Optimizedjob job = new Optimizedjob(conf, input, output, 
 				"Compute NGram Count");
 
 		job.setClasses(NgramCountMapper.class, NgramCountReducer.class, null);
