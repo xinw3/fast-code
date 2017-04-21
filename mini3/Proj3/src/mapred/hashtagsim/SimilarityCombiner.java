@@ -7,7 +7,7 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.io.IntWritable;
 
-public class SimilarityReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
+public class SimilarityCombiner extends Reducer<Text, IntWritable, Text, IntWritable> {
 
 	@Override
 	protected void reduce(Text key, Iterable<IntWritable> value, Context context)

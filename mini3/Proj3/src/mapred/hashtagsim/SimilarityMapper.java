@@ -9,7 +9,7 @@ import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
-public class SimilarityMapper extends Mapper<LongWritable, Text, Text, Text> {
+public class SimilarityMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 
 	/**
 	 * We compute the inner product of feature vector of every hashtag with that
@@ -22,7 +22,7 @@ public class SimilarityMapper extends Mapper<LongWritable, Text, Text, Text> {
 		String[] hashtag_featureVector = line.split("\\s+", 2);
 		Map<String, Integer> tagMap = parseFeatureVector(hashtag_featureVector[1]);
 		for (String k : tagMap.keySet()) {
-				context.write(new Text(k), new Text(Integer.toString(tagMap.get(k))));
+				context.write(new Text(k), new IntWritable(tagMap.get(k)));
 		}
 	}
 

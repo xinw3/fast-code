@@ -19,7 +19,7 @@ public class Driver {
 
 		// output: #a A:2;B:1...
 		getHashtagFeatureVector(input, tmpdir + "/feature_vector");
-		getHashtagSimilarities(tmpdir + "/feature_vector/part-r-00000", output);
+		getHashtagSimilarities(tmpdir + "/feature_vector/", output);
 	}
 
 	/**
@@ -34,7 +34,7 @@ public class Driver {
 			throws Exception {
 		Optimizedjob job = new Optimizedjob(new Configuration(), input, output,
 				"Get feature vector for all hashtags");
-		job.setClasses(HashtagMapper.class, HashtagReducer.class, null);
+		job.setClasses(HashtagMapper.class, HashtagReducer.class, HashtagCombiner.class);
 		job.setMapOutputClasses(Text.class, Text.class);
 		job.run();
 	}
@@ -60,9 +60,9 @@ public class Driver {
 		Configuration conf = new Configuration();
 
 		Optimizedjob job = new Optimizedjob(conf, input, output,
-				"Get similarities between #job and all other hashtags");
-		job.setClasses(SimilarityMapper.class, SimilarityReducer.class, null);
-		job.setMapOutputClasses(Text.class, Text.class);
+				"Get similarities between hashtag pairs");
+		job.setClasses(SimilarityMapper.class, SimilarityReducer.class, SimilarityCombiner.class);
+		job.setMapOutputClasses(Text.class, IntWritable.class);
 		job.run();
 	}
 }

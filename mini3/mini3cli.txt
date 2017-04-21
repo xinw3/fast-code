@@ -1,3 +1,33 @@
 ant
 
-hadoop jar 18645_project3_team034.jar -program hashtagsim -input data/tweets1m/tweets1m.txt -output data/hashtag1m -tmdir tmp
+hadoop jar 18645_project3_team034.jar -program hashtagsim -D mapred.child.java.opts=-Xmx4096M -input ./data/tweets1m/tweets1m.txt -output ./data/hashtag1m -tmpdir tmp
+
+hadoop jar 18645_project3_team034.jar -program hashtagsim -D mapred.child.java.opts=-Xmx1024M -input data/tweets1m/tweets1k.txt -output data/hashtag1k -tmpdir tmp
+
+hadoop jar 18645_project3_team034.jar -program ngramcount -input data/tweets1m/tweets1m.txt -output data/ngram1m -n 2
+
+
+sort -rn -t $'\t' -k2 part-r-00000 > sorted
+
+
+aws emr create-cluster --name "Test cluster hashtagsim" --ami-version 2.4.11 \
+--service-role EMR_DefaultRole --ec2-attributes InstanceProfile=EMR_EC2_DefaultRole \
+--log-uri s3://18645-hw3.log-uri.hashtagsim --enable-debugging \
+--instance-groups InstanceGroupType=MASTER,InstanceCount=1,InstanceType=c1.medium InstanceGroupType=CORE,InstanceCount=4,InstanceType=c1.medium \
+--steps Type=CUSTOM_JAR,Jar=s3://18645-hw3/18645_project3_team034.jar,Args=["-input","s3://18645-hw3-tweets1m/tweets1m.txt","-output","s3://18645-hw3-output/hashtag1m","-program","hashtagsim","-tmpdir","tmp", "-D", "mapred.child.java.opts=-Xmx2048M"] \
+--no-auto-terminate
+
+aws emr create-cluster --name "Test cluster ngramcount" --ami-version 2.4.11 --service-role EMR_DefaultRole --ec2-attributes InstanceProfile=EMR_EC2_DefaultRole --log-uri s3://18645-hw3.log-uri.ngramcount --enable-debugging --instance-groups InstanceGroupType=MASTER,InstanceCount=1,InstanceType=c1.medium InstanceGroupType=CORE,InstanceCount=4,InstanceType=c1.medium --steps Type=CUSTOM_JAR,Jar=s3://18645-hw3/18645_project3_team034.jar,Args=["-input","s3://18645-hw3-tweets10m/tweets10m.txt","-output","s3://18645-hw3-output/ngram10m","-program","ngramcount", "-D", "mapred.child.java.opts=-Xmx2048M", "-n", "5"] --auto-terminate
+
+-input s3://18645-hw3-tweets1m/tweets1m.txt -output s3://18645-hw3-output/hashtag1m -program hashtagsim -tmpdir tmp -D mapred.child.java.opts=-Xmx4096m
+
+-input s3://18645-hw3-tweets10m/tweets10m.txt -output s3://18645-hw3-output/ngram10m -program ngramcount -D mapred.child.java.opts=-Xmx2048M
+
+<property>
+    <name>mapred.child.java.opts</name>
+    <value>-Xmx4096m</value>
+</property>
+
+export HADOOP_OPTS="-Xmx4096m"
+
+hadoop fs -copyFromLocal data/ .

@@ -1,0 +1,25 @@
+export PATH=$PATH:$HOME/hadoop-2.4.0/bin
+export JAVA_HOME=/Library/Java/Home
+export PATH=$JAVA_HOME/bin:$PATH
+
+hadoop jar 18645_project3_team034.jar -program ngramcount -input data/tweets1m/tweets1m.txt -output data/ngram1m -n 2
+
+hadoop jar 18645_project3_team034.jar -program hashtagsim -input data/tweets1m/tweets1m.txt -output data/hashtag1m -tmpdir tmp
+
+aws s3 mb s3://18645-hw3
+aws s3 cp 18645_project3_team034.jar s3://18645-hw3
+aws s3 mb s3://18645-hw3-tweets10m
+aws s3 mb s3://18645-hw3-tweets1m 
+aws s3 cp tweets10m.txt s3://18645-hw3-tweets10m 
+aws s3 cp tweets1m.txt s3://18645-hw3-tweets1m
+aws s3 mb s3://18645-hw3-output   
+aws s3 mb s3://18645-hw3.log-uri.ngramcount
+aws s3 mb s3://18645-hw3.log-uri.hashtagsim
+
+aws emr create-cluster --name "Test cluster ngramcount" --ami-version 2.4.11 --service-role EMR_DefaultRole --ec2-attributes InstanceProfile=EMR_EC2_DefaultRole --log-uri s3://18645-hw3.log-uri.ngramcount --enable-debugging --instance-groups InstanceGroupType=MASTER,InstanceCount=1,InstanceType=c1.medium InstanceGroupType=CORE,InstanceCount=4,InstanceType=c1.medium --steps Type=CUSTOM_JAR,Jar=s3://18645-hw3/18645_project3_team034.jar,Args=["-input","s3://18645-hw3-tweets10m/tweets10m.txt","-output","s3://18645-hw3-output/ngram10m","-program","ngramcount"] --auto-terminate
+
+aws emr create-cluster --name "Test cluster hashtagsim" --ami-version 2.4.11 --service-role EMR_DefaultRole --ec2-attributes InstanceProfile=EMR_EC2_DefaultRole --log-uri s3://18645-hw3.log-uri.hashtagsim --enable-debugging --instance-groups InstanceGroupType=MASTER,InstanceCount=1,InstanceType=c1.medium InstanceGroupType=CORE,InstanceCount=4,InstanceType=c1.medium --steps Type=CUSTOM_JAR,Jar=s3://18645-hw3/18645_project3_team034.jar,Args=["-input","s3://18645-hw3-tweets1m/tweets1m.txt","-output","s3://18645-hw3-output/hashtag1m","-program","hashtagsim","-tmpdir","tmp"] --auto-terminate
+
+aws emr terminate-clusters --cluster-ids $CID
+
+
