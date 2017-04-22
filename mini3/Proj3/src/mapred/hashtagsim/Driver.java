@@ -19,7 +19,7 @@ public class Driver {
 
 		// output: #a A:2;B:1...
 		getHashtagFeatureVector(input, tmpdir + "/feature_vector");
-		getHashtagSimilarities(tmpdir + "/feature_vector/", output);
+		getHashtagSimilarities(tmpdir + "/feature_vector", output);
 	}
 
 	/**
@@ -36,6 +36,7 @@ public class Driver {
 				"Get feature vector for all hashtags");
 		job.setClasses(HashtagMapper.class, HashtagReducer.class, HashtagCombiner.class);
 		job.setMapOutputClasses(Text.class, Text.class);
+		job.setNumReduceTasks(10);
 		job.run();
 	}
 
