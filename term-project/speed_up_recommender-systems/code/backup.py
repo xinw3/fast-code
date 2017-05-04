@@ -171,7 +171,7 @@ for the names that don't have a "training" or have training
 they all refer to training data
 '''
 def main():
-    ''' 
+
     training_data, validation_data = split_training_data(training_file)
     training_userid_list, training_movieid_list, training_rating_list = preprocess_training_file(training_data)
     valid_userid_list, valid_movieid_list, valid_rating_list = preprocess_training_file(validation_data)
@@ -231,7 +231,7 @@ def main():
         print "Valid Loss ", valid_loss
         print "Valid RMSE ", valid_RMSE
         print ""
-    '''
+    
     #TESTING CODE FOLLOWS
     userid_list, movieid_list = preprocess_test_file(test_file)
     output = open(output_file, 'w')
@@ -244,6 +244,6 @@ def main():
        output.write(str(ratings[user - 1][movie - 1]))
        output.write("\n")
     output.close()
-    
+
 
 main()
