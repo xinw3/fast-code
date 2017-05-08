@@ -237,4 +237,6 @@ def main():
     output.close()
     #    print ratings[user - 1][movie - 1]
 
+start_time = time.time()
 main()
+print("--- %s seconds ---" % (time.time() - start_time))

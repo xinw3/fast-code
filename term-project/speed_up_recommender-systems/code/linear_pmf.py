@@ -195,11 +195,11 @@ def main():
     training_data, validation_data = split_training_data(training_file)
     training_userid_list, training_movieid_list, training_rating_list = preprocess_training_file(training_data)
     valid_userid_list, valid_movieid_list, valid_rating_list = preprocess_training_file(validation_data)
-    
+
     averageRatingTrain = averageCalc(training_rating_list)
-    
+
     training_rating_list = subtractAverage(training_rating_list, averageRatingTrain)
-    valid_rating_list = subtractAverage(valid_rating_list, averageRatingTrain) 
+    valid_rating_list = subtractAverage(valid_rating_list, averageRatingTrain)
 
     userMovieDict, number_users, number_movies = get_dictionaries(training_userid_list, training_movieid_list, training_rating_list)
     valid_user_movie_dict, valid_number_users, valid_number_movies = get_dictionaries(valid_userid_list, valid_movieid_list, valid_rating_list)
@@ -235,4 +235,6 @@ def main():
     #    movie = movieid_list[i]
     #    print ratings[user - 1][movie - 1]
 
+start_time = time.time()
 main()
+print("--- %s seconds ---" % (time.time() - start_time))

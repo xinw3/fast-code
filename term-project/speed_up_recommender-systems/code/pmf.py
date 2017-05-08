@@ -222,4 +222,6 @@ def main():
     #    movie = movieid_list[i]
     #    print ratings[user - 1][movie - 1]
 
+start_time = time.time()
 main()
+print("--- %s seconds ---" % (time.time() - start_time))
